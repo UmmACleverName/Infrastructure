@@ -4,23 +4,26 @@
 namespace TAC{
 
 
-Tasking::Tasking() : _shutdown(false), _debug(false), _thread(nullptr), _name("default"), _taskBody() 
-{
-
-}
+Tasking::Tasking() : _shutdown(false), _debug(false), _thread(nullptr), _name("default"), _taskBody(),
+                     _clientData(nullptr)  
+{}
 
 Tasking::~Tasking()
 {
-
+    delete _thread;
+    delete _clientData; 
 }
 
-void Tasking::construct(/*Add args*/ std::string taskName, 
-                        std::function<void(Tasking*, ClientData*)> taskBody) 
+void Tasking::construct(std::string taskName,
+                        std::string logFile,
+                        ClientData& clientData, 
+                        std::function<void(Tasking*)> taskBody) 
 {
     initialize();
     _name = taskName;
-    _taskfile.open("./testing.log"); //TODO: update this.
+    _taskfile.open(logFile); //TODO: update this.
     _taskBody = taskBody;
+    _clientData = clientData.Clone(); 
 }
 
 void Tasking::write(const std::string& msg)
@@ -49,16 +52,21 @@ std::string Tasking::getName() const
     return _name; 
 }
 
-void Tasking::shutDown()
+const Tasking::ClientData* Tasking::GetClientData() const
 {
-    //_shutdown = true;
+    return _clientData; 
+}
+
+void Tasking::ShutDown()
+{
+    _shutdown = true;
     _thread->join(); 
 }
 
-void Tasking::start(ClientData* classPtr)
+void Tasking::Start()
 {
     pthread_setname_np(pthread_self(),_name.c_str()); 
-    _thread = new std::thread(_taskBody,this,classPtr);  
+    _thread = new std::thread(_taskBody,this);  
 }
 
 }//EOF TAC namespace. 

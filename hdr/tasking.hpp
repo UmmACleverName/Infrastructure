@@ -17,15 +17,18 @@ class Tasking
         Tasking& operator=(const Tasking&) = delete;
         Tasking& operator=(Tasking&&)      = delete;
         virtual ~Tasking();
-        virtual void shutDown();
-        virtual void start(ClientData*) final;  
-        void construct(std::string taskName, 
-                       std::function<void(Tasking*, ClientData*)>);
+        virtual void ShutDown();
+        virtual void Start() final;  
+        void construct(std::string,
+                       std::string, 
+                       ClientData&, 
+                       std::function<void(Tasking*)>);
         void write(const std::string&);
         void setDebug(bool debug = false);
         bool debugOn() const;
         bool IsDone()  const; 
-        std::string getName() const; 
+        std::string getName() const;
+        const ClientData*  GetClientData() const; 
     public:
         struct ClientData
         {
@@ -41,12 +44,13 @@ class Tasking
     private: 
         virtual void initialize() = 0; 
     protected: 
-        bool                             _shutdown;
-        bool                             _debug; 
-        std::thread*                     _thread;
-        std::ofstream                    _taskfile;
-        mutable std::string              _name;
-        std::function<void(Tasking*, ClientData*)> _taskBody; 
+        bool                          _shutdown; //
+        bool                          _debug;   //
+        std::thread*                  _thread;
+        std::ofstream                 _taskfile;
+        mutable std::string           _name;
+        std::function<void(Tasking*)> _taskBody;
+        ClientData*                   _clientData; 
 };
 
 

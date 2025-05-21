@@ -4,7 +4,7 @@ STD      = -std=c++20
 INCLUDES = -I. 
 DEBUG    = -DDEBUG=0
 LIBS     = -pthread 
-OBJFILES = main.o tasking.o  
+OBJFILES = main.o tasking.o taskmanager.o 
 
 all: main
 

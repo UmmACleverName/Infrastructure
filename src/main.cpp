@@ -3,6 +3,7 @@
 #include"hdr/taskmanager.hpp" 
 #include"hdr/tac.hpp"
 #include<functional>
+#include<unistd.h> 
 
 struct TestData : public TAC::Tasking::ClientData
 {
@@ -22,9 +23,9 @@ class TestTask : virtual public TAC::Tasking
     public:
         TestTask() {}
         ~TestTask() {}
-        void shutDown() override
+        void ShutDown() override
         {
-            Tasking::shutDown();
+            Tasking::ShutDown();
             std::cout << "Shutting down\n"; 
         }
     private:
@@ -35,35 +36,42 @@ class TestTask : virtual public TAC::Tasking
 }; 
 
 
-void run(TAC::Tac& tac)
+void TestBody(TAC::Tasking* self)
 {
-    for(int i = 0; i < 5; i++)
-    {
-        std::cout << tac.GetName() << std::endl;
-    }
-}
-
-void TestBody(TAC::Tasking* self, TAC::Tasking::ClientData* classPtr)
-{
-    TestData* ptr = (classPtr == nullptr ? nullptr : (TestData*)(classPtr)); 
+    TestData* ptr = (self->GetClientData() == nullptr ? nullptr : (TestData*)(self->GetClientData())); 
 
     while(!(self->IsDone()))
     {
-        if(ptr != nullptr) self->write(ptr->str); 
+        if(ptr != nullptr) self->write(ptr->str + self->getName()); 
     }//EOF Tasking Loop. 
 }
 
+class TestManager : virtual public TAC::TaskingManager
+{
+    public:
+        TestManager() = default;
+        ~TestManager() = default; 
+        void construct()
+        {
+            TestData T; 
+            for(unsigned int i = 1; i <= 3; ++i)
+            {
+                TestTask* tac = new TestTask;
+                tac->construct("Test task " + std::to_string(i), "testlog_" + std::to_string(i) + ".log", T, TestBody);
+                Add(tac); 
+            }
+        };
 
+};
 
 
 
 int main()
 {
-    TestData test;
-    TestTask tac;
-    std::function<void(TAC::Tasking*, TAC::Tasking::ClientData*)> func = TestBody; 
-    tac.construct("Josh is awesome", func);
-    tac.start(test.Clone());
-    tac.shutDown(); 
+    TestManager manager;
+    manager.construct();
+    manager.StartWork(); 
+    sleep(10);
+    manager.StopWork();  
     return EXIT_SUCCESS; 
 }
