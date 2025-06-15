@@ -7,6 +7,8 @@
 
 namespace TAC{
 
+using TacList = std::vector<Tasking*>; 
+
 class TaskingManager
 {
     public:
@@ -20,23 +22,27 @@ class TaskingManager
         virtual void construct() = 0; 
         void StartWork(); 
         void StopWork();
+
+        TacList  GetTaskList();
+        Tasking* GetTask(std::thread::id);
+        bool BelongToMe(std::thread::id); 
+
     protected:
         void Add(Tasking*);
     private:
-        std::vector<Tasking*> _listOfTask;
-        std::string           _nameOfManager; 
+        TacList     _listOfTask;
+        std::string _nameOfManager; 
 
 };//EOF TaskingManager 
 
 
 
 
+using ManagerList = std::vector<TaskingManager*>;
+
+extern ManagerList theListOfManagers; 
 
 }//EOF TAC namespace. 
-
-
-
-
 
 
 

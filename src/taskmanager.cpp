@@ -7,7 +7,10 @@
 namespace TAC{
 
 
-TaskingManager::TaskingManager(): _listOfTask(), _nameOfManager("Default") {} 
+TaskingManager::TaskingManager(): _listOfTask(), _nameOfManager("Default") 
+{
+    theListOfManagers.push_back(this); 
+} 
 
 
 void TaskingManager::Add(Tasking* classPtr)
@@ -29,8 +32,32 @@ void TaskingManager::StopWork()
         itr->ShutDown(); 
 }
 
+TacList TaskingManager::GetTaskList()
+{
+    return _listOfTask; 
+}
 
+bool TaskingManager::BelongToMe(std::thread::id id)
+{
+    for(const auto itr : _listOfTask)
+    {
+        if( itr->GetID() == id)
+            return true; 
+    }
+    return false; 
+}
 
+Tasking* TaskingManager::GetTask(std::thread::id id)
+{
+    for(const auto itr : _listOfTask)
+    {
+        if( itr->GetID() == id)
+            return itr; 
+    }
+    return nullptr; 
+}
+
+ManagerList theListOfManagers; 
 
 
 }//EOF TAC namespace. 

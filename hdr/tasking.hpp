@@ -25,10 +25,11 @@ class Tasking
                        std::function<void(Tasking*)>);
         void write(const std::string&);
         void setDebug(bool debug = false);
-        bool debugOn() const;
+        bool DebugOn() const;
         bool IsDone()  const; 
         std::string getName() const;
-        const ClientData*  GetClientData() const; 
+        const ClientData*  GetClientData() const;
+        std::thread::id GetID() const; 
     public:
         struct ClientData
         {
@@ -50,7 +51,8 @@ class Tasking
         std::ofstream                 _taskfile;
         mutable std::string           _name;
         std::function<void(Tasking*)> _taskBody;
-        ClientData*                   _clientData; 
+        ClientData*                   _clientData;
+        std::thread::id               _myID; 
 };
 
 

@@ -2,6 +2,7 @@
 #include"hdr/tasking.hpp"
 #include"hdr/taskmanager.hpp" 
 #include"hdr/tac.hpp"
+#include"hdr/logger.hpp" 
 #include<functional>
 #include<unistd.h> 
 
@@ -42,7 +43,9 @@ void TestBody(TAC::Tasking* self)
 
     while(!(self->IsDone()))
     {
-        if(ptr != nullptr) self->write(ptr->str + self->getName()); 
+        if(ptr != nullptr){ 
+            LOGGER::Log("Running in task\n"); 
+        }
     }//EOF Tasking Loop. 
 }
 
@@ -57,8 +60,8 @@ class TestManager : virtual public TAC::TaskingManager
             for(unsigned int i = 1; i <= 3; ++i)
             {
                 TestTask* tac = new TestTask;
-                tac->construct("Test task " + std::to_string(i), "testlog_" + std::to_string(i) + ".log", T, TestBody);
                 Add(tac); 
+                tac->construct("Test task " + std::to_string(i), "testlog_" + std::to_string(i) + ".log", T, TestBody);
             }
         };
 
@@ -71,7 +74,8 @@ int main()
     TestManager manager;
     manager.construct();
     manager.StartWork(); 
-    sleep(10);
-    manager.StopWork();  
+    sleep(2);
+    manager.StopWork(); 
+    LOGGER::Log(" Running in main\n"); 
     return EXIT_SUCCESS; 
 }

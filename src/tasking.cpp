@@ -5,7 +5,7 @@ namespace TAC{
 
 
 Tasking::Tasking() : _shutdown(false), _debug(false), _thread(nullptr), _name("default"), _taskBody(),
-                     _clientData(nullptr)  
+                     _clientData(nullptr), _myID() 
 {}
 
 Tasking::~Tasking()
@@ -37,7 +37,7 @@ void Tasking::setDebug(bool debug)
     _debug = debug; 
 }
 
-bool Tasking::debugOn() const
+bool Tasking::DebugOn() const
 {
     return _debug; 
 }
@@ -50,6 +50,11 @@ bool Tasking::IsDone() const
 std::string Tasking::getName() const
 {
     return _name; 
+}
+
+std::thread::id Tasking::GetID() const 
+{
+    return _myID; 
 }
 
 const Tasking::ClientData* Tasking::GetClientData() const
@@ -67,6 +72,7 @@ void Tasking::Start()
 {
     pthread_setname_np(pthread_self(),_name.c_str()); 
     _thread = new std::thread(_taskBody,this);  
+    _myID   = _thread->get_id(); 
 }
 
 }//EOF TAC namespace. 
