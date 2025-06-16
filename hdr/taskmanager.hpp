@@ -7,16 +7,16 @@
 
 namespace TAC{
 
-using TacList = std::vector<Tasking*>; 
+using TacList = std::vector<Tasking*>; //TODO: Should make this a map with key as the tac id. This will allow function BelongToME efficient.
 
 class TaskingManager
 {
     public:
         TaskingManager();
-        //TaskingManager(const TaskingManager&);
-        //TaskingManager(TaskingManager&&);
-        //TaskingManager& operator=(const TaskingManager&);
-        //TaskingManager& operator=(TaskingManager&&);
+        TaskingManager(const TaskingManager&);
+        TaskingManager(TaskingManager&&);
+        TaskingManager& operator=(const TaskingManager&);
+        TaskingManager& operator=(TaskingManager&&);
         virtual ~TaskingManager() = default;
         
         virtual void construct() = 0; 
@@ -38,7 +38,7 @@ class TaskingManager
 
 
 
-using ManagerList = std::vector<TaskingManager*>; //TODO: Should make this a map with key as the tac id.
+using ManagerList = std::vector<TaskingManager*>; //TODO: Should make this a map with key as the manager name?
 
 extern ManagerList theListOfManagers; 
 
