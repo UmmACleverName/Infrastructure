@@ -38,7 +38,7 @@ class TaskingManager
 
 
 
-using ManagerList = std::vector<TaskingManager*>;
+using ManagerList = std::vector<TaskingManager*>; //TODO: Should make this a map with key as the tac id.
 
 extern ManagerList theListOfManagers; 
 
