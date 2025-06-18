@@ -1,6 +1,11 @@
+# Executables.
+*.exe
+*.out 
+
 # Object Files.
 *.o
 
-# Any log files.
+# Any log or swp files.
 *.log
 *.txt
+*.swp
