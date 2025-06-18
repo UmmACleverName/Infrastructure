@@ -22,12 +22,12 @@ class Tasking
         void construct(std::string,
                        std::string, 
                        ClientData&, 
-                       std::function<void(Tasking*)>);
-        void write(const std::string&);
-        void setDebug(bool debug = false);
+                       std::function<void(Tasking*)>); //Cap
+        void write(const std::string&); //Cap
+        void setDebug(bool debug = false); //Cap
         bool DebugOn() const;
         bool IsDone()  const; 
-        std::string getName() const;
+        std::string getName() const; //Cap
         const ClientData*  GetClientData() const;
         std::thread::id GetID() const; 
     public:
