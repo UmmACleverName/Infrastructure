@@ -14,9 +14,9 @@ class TaskingManager
     public:
         TaskingManager();
         TaskingManager(const TaskingManager&);
-        TaskingManager(TaskingManager&&);
+        //TaskingManager(TaskingManager&&);
         TaskingManager& operator=(const TaskingManager&);
-        TaskingManager& operator=(TaskingManager&&);
+        //TaskingManager& operator=(TaskingManager&&);
         virtual ~TaskingManager() = default;
         
         virtual void construct() = 0; 

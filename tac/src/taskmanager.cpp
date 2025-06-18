@@ -12,6 +12,18 @@ TaskingManager::TaskingManager(): _listOfTask(), _nameOfManager("Default")
     theListOfManagers.push_back(this); 
 } 
 
+TaskingManager::TaskingManager(const TaskingManager& Manager): _listOfTask(Manager._listOfTask),
+_nameOfManager(Manager._nameOfManager) 
+{
+    theListOfManagers.push_back(this); 
+} 
+
+TaskingManager& TaskingManager::operator=(const TaskingManager& Manager)
+{
+    _listOfTask = Manager._listOfTask;
+    _nameOfManager = Manager._nameOfManager;
+    return *this; 
+}
 
 void TaskingManager::Add(Tasking* classPtr)
 {
