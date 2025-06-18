@@ -19,7 +19,7 @@ class TaskingManager
         //TaskingManager& operator=(TaskingManager&&);
         virtual ~TaskingManager() = default;
         
-        virtual void construct() = 0; 
+        virtual void construct() = 0; //Cap
         void StartWork(); 
         void StopWork();
 
