@@ -17,7 +17,7 @@ void Log(std::string details, TAC::Tasking* task)
     {
         if(task->DebugOn())
         {
-            task->write(details); 
+            task->Write(details); 
         }
     }
     else //Try to find the task info. 
@@ -27,7 +27,7 @@ void Log(std::string details, TAC::Tasking* task)
         {
             if(itr->BelongToMe(taskID))
             {
-                itr->GetTask(taskID)->write(details); 
+                itr->GetTask(taskID)->Write(details); 
                 return;
             }
         }

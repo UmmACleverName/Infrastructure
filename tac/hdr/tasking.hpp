@@ -5,12 +5,29 @@
 #include<fstream> 
 #include<string> 
 
+/**
+ * @file tasking.hpp
+ * @brief This file defines the Tasking class.
+ */
+
+/**
+ * @class Tasking
+ * @brief A simple example class to demonstrate Doxygen.
+ *
+ * This class contains a constructor.
+ */
+
 namespace TAC{
 
 class Tasking
 {
     public:
-        struct ClientData; //Forward declare. 
+        struct ClientData; //Forward declare.
+        /**
+         * @brief Constructor for Tasking.
+         *
+         * Initializes a new instance of Tasking.
+         */
         Tasking(); 
         Tasking(const Tasking&)            = delete;
         Tasking(Tasking&&)                 = delete;
@@ -19,15 +36,15 @@ class Tasking
         virtual ~Tasking();
         virtual void ShutDown();
         virtual void Start() final;  
-        void construct(std::string,
+        void Construct(std::string,
                        std::string, 
                        ClientData&, 
                        std::function<void(Tasking*)>);
-        void write(const std::string&);
-        void setDebug(bool debug = false);
+        void Write(const std::string&);
+        void SetDebug(bool debug = false);
         bool DebugOn() const;
         bool IsDone()  const; 
-        std::string getName() const;
+        std::string GetName() const; 
         const ClientData*  GetClientData() const;
         std::thread::id GetID() const; 
     public:
@@ -55,14 +72,6 @@ class Tasking
         std::thread::id               _myID; 
 };
 
-
-
-
-
-
-
 }//EOF TAC namespace. 
-
-
 
 #endif 

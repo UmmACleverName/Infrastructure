@@ -53,14 +53,14 @@ class TestManager : virtual public TAC::TaskingManager
     public:
         TestManager() = default;
         ~TestManager() = default; 
-        void construct()
+        void Construct()
         {
             TestData T; 
             for(unsigned int i = 1; i <= 3; ++i)
             {
                 TestTask* tac = new TestTask;
                 Add(tac); 
-                tac->construct("Test task " + std::to_string(i), "testlog_" + std::to_string(i) + ".log", T, TestBody);
+                tac->Construct("Test task " + std::to_string(i), "testlog_" + std::to_string(i) + ".log", T, TestBody);
             }
         };
 
@@ -71,7 +71,7 @@ class TestManager : virtual public TAC::TaskingManager
 int main()
 {
     TestManager manager;
-    manager.construct();
+    manager.Construct();
     manager.StartWork(); 
     sleep(2);
     manager.StopWork(); 
