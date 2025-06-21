@@ -14,7 +14,7 @@ Tasking::~Tasking()
     delete _clientData; 
 }
 
-void Tasking::construct(std::string taskName,
+void Tasking::Construct(std::string taskName,
                         std::string logFile,
                         ClientData& clientData, 
                         std::function<void(Tasking*)> taskBody) 
@@ -26,13 +26,13 @@ void Tasking::construct(std::string taskName,
     _clientData = clientData.Clone(); 
 }
 
-void Tasking::write(const std::string& msg)
+void Tasking::Write(const std::string& msg)
 {
     size_t size = msg.size(); 
     _taskfile.write(msg.c_str(),size);  
 }
 
-void Tasking::setDebug(bool debug)
+void Tasking::SetDebug(bool debug)
 {
     _debug = debug; 
 }
@@ -47,7 +47,7 @@ bool Tasking::IsDone() const
     return (_shutdown == true); 
 }
 
-std::string Tasking::getName() const
+std::string Tasking::GetName() const
 {
     return _name; 
 }
